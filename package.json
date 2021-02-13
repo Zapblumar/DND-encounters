@@ -1,0 +1,30 @@
+{
+  "name": "dnd-encounters",
+  "version": "1.0.0",
+  "description": "rpg",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zapblumar/DND-encounters.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zapblumar/DND-encounters/issues"
+  },
+  "homepage": "https://github.com/Zapblumar/DND-encounters#readme",
+  "dependencies": {
+    "cookie-session": "^1.4.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongo": "^0.1.0",
+    "mongoose": "^5.11.15",
+    "nodemon": "^2.0.7",
+    "passport": "^0.4.1",
+    "router": "^1.3.5",
+    "socket.io": "^3.1.1"
+  }
+}
