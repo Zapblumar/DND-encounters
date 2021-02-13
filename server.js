@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const socket = require("socket.io")
+const socket = require("socket.io");
+const passport = require('./passport');
 require('dotenv').config();
 
 
@@ -14,7 +15,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/DND-encounters'
 mongoose.set('debug', true);
 
 // passport
-const passport = require('./passport')
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
