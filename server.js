@@ -23,9 +23,16 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
-app.use(require('cookie-parser')());
+//app.use(require('cookie-parser')());
+const session = require('express-session');
 app.use(passport.initialize())
-//app.use(passport.session());
+app.use(
+  session({
+    secret: 'Super secret secret',
+    cookie: { expires: 10 * 60 * 1000 },
+    resave: false,
+  })
+);
 //app.use(require('./routes'));
 
 const server = app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
