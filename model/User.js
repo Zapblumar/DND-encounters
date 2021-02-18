@@ -15,14 +15,9 @@ const UserSchema = new Schema({
   },
   userPassword: {
     type: String,
-    unique: true,
     required: 'Password is Required',
     minLength: 6
-  },
-  userCreated: {
-    type: Date,
-    default: Date.now
-  },
+  }
 })
 
 const User = model('User', UserSchema);

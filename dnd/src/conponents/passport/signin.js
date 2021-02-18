@@ -1,9 +1,9 @@
 const passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
-const User = require('../model')
+const User = require('../../model')
 
-const signupStrategy = passport.use(new LocalStrategy(
+const signinStrategy = passport.use(new LocalStrategy(
   function (username, password, done) {
     User.findOne({ username: username }, function (err, user) {
       if (err) { return done(err); }
@@ -17,4 +17,5 @@ const signupStrategy = passport.use(new LocalStrategy(
     });
   }
 ));
-module.exports = signupStrategy;
+
+module.exports = signinStrategy;

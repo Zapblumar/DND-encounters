@@ -1,10 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const socket = require("socket.io");
-const passport = require('./passport');
+const passport = require('./dnd/passport');
 require('dotenv').config();
 
-
+const indexRouter = require('./routes/index');
+const userRouter = require('./routes/users')
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/DND-encounters', {
   useFindAndModify: false,
   useNewUrlParser: true,
@@ -20,9 +21,10 @@ mongoose.set('debug', true);
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+//app.use(logger('dev'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static('./public'));
 //app.use(require('cookie-parser')());
 const session = require('express-session');
 app.use(passport.initialize())
@@ -33,7 +35,9 @@ app.use(
     resave: false,
   })
 );
-//app.use(require('./routes'));
+
+//app.use('/', indexRouter);
+app.use('/user', userRouter)
 
 const server = app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
 
@@ -41,3 +45,5 @@ const server = app.listen(PORT, () => console.log(`🌍 Connected on localhost:$
 const io = socket(server);
 
 io.on('connection', (socket) => console.log(`connection is made`))
+
+module.exports = app;
