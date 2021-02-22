@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
-export default class Signup extends Component {
+export default class Chat extends Component {
   render() {
     //JSX
     return (
       <div>
-        <h1>Signup</h1>
+        <h1>Chat</h1>
       </div>
     );
   }
