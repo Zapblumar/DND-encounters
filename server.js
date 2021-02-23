@@ -45,8 +45,5 @@ app.use('/user', userRouter)
 const server = app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
 
 
-const io = socket(server);
-
-io.on('connection', (socket) => console.log(`connection is made`))
 
 module.exports = app;

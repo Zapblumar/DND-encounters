@@ -1,52 +1,58 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-export default class Signin extends Component {
-  state = {
+function Login() {
+  const [user, setUser] = useState({
     userName: "",
-    userPassword: "",
-    userEmail: "",
-  };
-  handleSubmit = (event) => {
-    event.preventDefault();
-    const { userName, userPassword, userEmail } = this.state;
-    axios
-      .post({
-        url: "/signin",
-        method: "POST",
-        data: {
-          userName,
-          userPassword,
-          userEmail,
-        },
-      })
-      .then((response) => {
-        console.log("data:", response.data);
-      })
-      .catch((error) => {
-        console.log("error", error.response);
-      });
-  };
-  handleChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value,
+    email: "",
+    password: "",
+  });
+
+  const { userName, email, password } = user;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log("Submit Form", user);
+
+    axios.post("/user/signin", {
+      method: "POST",
+      user: {
+        userName,
+        password,
+        email,
+      },
     });
   };
-  render() {
-    //JSX
-    return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <h3>User Name</h3>
-          <input type="text" name="userName" onChange={this.onChange} />
-          <h3>User Email</h3>
-          <input type="text" name="userEmail" onChange={this.onChange} />
-          <h3>Password</h3>
-          <input type="password" name="userPassword" onChange={this.onChange} />
-          <button>Signin</button>
-        </form>
-      </div>
-    );
-  }
+
+  const handleChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+    console.log("Handle Form", user);
+  };
+
+  return (
+    <section>
+      <h1 data-testid="h1tag">Contact me</h1>
+      <form id="contact-form" onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="userName">Name:</label>
+          <input type="text" name="userName" onBlur={handleChange} />
+        </div>
+        <div>
+          <label htmlFor="email">Email address:</label>
+          <input type="email" name="email" onBlur={handleChange} />
+        </div>
+        <div>
+          <label htmlFor="password">password </label>
+          <input type="password" name="password" onBlur={handleChange} />
+        </div>
+
+        <button data-testid="button" type="submit">
+          Submit
+        </button>
+      </form>
+    </section>
+  );
 }
+
+export default Login;

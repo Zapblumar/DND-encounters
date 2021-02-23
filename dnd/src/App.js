@@ -28,9 +28,13 @@ function App() {
       </Switch>
 
     </Router>
+
   );
 }
 
+// const io = socket(server);
+
+// io.on('connection', (socket) => console.log(`connection is made`))
 export default App;
 
 

@@ -1,9 +1,6 @@
 import React, { Component, useState } from "react";
 
 function Signup() {
-  // const signingup = (event) => {
-  //   console.log("start");
-  //   event.preventDefault();
 
   function handleSubmit(e) {
     e.preventDefault();
