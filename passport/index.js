@@ -1,11 +1,11 @@
 const passport = require('passport');
-const User = require('../../model/User')
+const User = require('../model/User')
 
-const google = require('./google');
+//const google = require('./google');
 const signin = require('./signin');
 const signup = require('./signup');
-const twitter = require('./twitter');
-const github = require('./github');
+//const twitter = require('./twitter');
+//const github = require('./github');
 
 passport.use('local-signin', signin);
 passport.use('local-signup', signup);

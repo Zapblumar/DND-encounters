@@ -1,10 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const socket = require("socket.io");
-const passport = require('./dnd/passport');
+const router = express.Router();
+const morgan = require('morgan')
+const passport = require('passport');
 require('dotenv').config();
 
-const indexRouter = require('./routes/index');
+//const indexRouter = require('./routes/index');
 const userRouter = require('./routes/users')
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/DND-encounters', {
   useFindAndModify: false,
@@ -19,9 +21,10 @@ mongoose.set('debug', true);
 
 
 const app = express();
+
 const PORT = process.env.PORT || 3001;
 
-//app.use(logger('dev'))
+app.use(morgan('tiny'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));

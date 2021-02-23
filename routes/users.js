@@ -1,19 +1,25 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('../dnd/passport');
+const passport = require('../passport');
 const User = require('../model/User')
 
 router.post('/signup',
+  function (req, res, next) {
 
+    console.log(req.get('Content-Type'))
+    next()
+
+  },
   passport.authenticate('local-signup'),
   function (req, res) {
 
     if (!req.user) { return res.redirect('/signin'); }
     req.logIn(req.user, function (err) {
       if (err) { return next(err); }
-      return res.redirect(req.user.userName);
+      return res.send(req.user)
+
     });
-  })//(req, res, next);
+  })
 
 router.get('/user', (req, res) => {
   console.log(res.body)
@@ -37,10 +43,14 @@ router.delete('/deleteUser', ({ params }, res) => {
     .catch(err => res.status(400).json(err));
 })
 
-router.post('/signin', passport.authenticate('signin', {
-  successRedirect: '/',
-  failureRedirect: '/home',
-  session: true
-}));
+router.post('/signin', passport.authenticate('local-signup'),
+  function (req, res) {
+
+    if (!req.user) { return res.redirect('/signin'); }
+    req.logIn(req.user, function (err) {
+      if (err) { return next(err); }
+      return res.redirect(req.user.userName);
+    });
+  })
 
 module.exports = router;
