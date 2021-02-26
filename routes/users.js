@@ -46,7 +46,7 @@ router.delete('/deleteUser', ({ params }, res) => {
 router.post('/signin',
   function (req, res, next) {
 
-    console.log(req.body)
+    console.log("route", req.body)
     next()
 
   },
@@ -55,7 +55,7 @@ router.post('/signin',
     User.findOne(req.body.User)
       .then(dbUserData => {
         if (!dbUserData) {
-          res.status(404).json({ message: 'No Friend found with this id!' });
+          res.status(404).json({ message: 'No user found with this id!' });
           return;
         }
         res.json(dbUserData);

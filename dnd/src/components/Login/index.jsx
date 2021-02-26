@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Profile from "../profile";
 
 function Login() {
   const [user, setUser] = useState({
@@ -23,6 +24,7 @@ function Login() {
         email,
       },
     });
+    return <Profile />;
   };
 
   const handleChange = (e) => {
@@ -32,7 +34,7 @@ function Login() {
 
   return (
     <section>
-      <h1 data-testid="h1tag">Contact me</h1>
+      <h1 data-testid="h1tag">Login</h1>
       <form id="contact-form" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="userName">Name:</label>

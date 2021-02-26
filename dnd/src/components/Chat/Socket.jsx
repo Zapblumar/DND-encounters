@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-export default class Chat extends Component {
-  render() {
+function chat () {
+  
     //JSX
     return (
       <div>
@@ -9,4 +9,5 @@ export default class Chat extends Component {
       </div>
     );
   }
-}
+
+export default chat;

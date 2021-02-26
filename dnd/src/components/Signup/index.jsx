@@ -1,7 +1,6 @@
 import React, { Component, useState } from "react";
 
 function Signup() {
-
   function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -29,6 +28,7 @@ function Signup() {
   //JSX
   return (
     <div>
+      <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <h3>User Name</h3>
         <input type="text" name="username" />
