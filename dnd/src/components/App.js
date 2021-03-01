@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Profile from './profile';
+import Profile from './Profile';
 import Login from './Login'
 import Signup from './Signup';
 import NotFound from './notFound';
@@ -14,7 +14,7 @@ const PAGE = {
 
 
 function App() {
-
+  const [user, setUser] = useStorage("user")
   const [currentPage, handlePageChange] = useState("Home")
   const Page = PAGE[currentPage];
 
@@ -27,7 +27,8 @@ function App() {
 
 
       <main>
-        {<Page />}
+        {user ? <Profile user={user} /> : <Page onUserSubmit={setUser} />}
+
 
 
       </main>

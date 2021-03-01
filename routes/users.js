@@ -13,7 +13,7 @@ router.post('/signup',
   passport.authenticate('local-signup'),
   function (req, res) {
 
-    if (!req.user) { return res.redirect('/signin'); }
+    if (!req.user) { return res.redirect('/Login'); }
     req.logIn(req.user, function (err) {
       if (err) { return next(err); }
       return res.send(req.user)

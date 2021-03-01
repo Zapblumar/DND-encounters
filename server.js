@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const socket = require("socket.io");
 const router = express.Router();
 const morgan = require('morgan')
 const passport = require('passport');
@@ -27,10 +26,10 @@ const PORT = process.env.PORT || 3001;
 app.use(morgan('tiny'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('./public'));
+
 //app.use(require('cookie-parser')());
 const session = require('express-session');
-app.use(passport.initialize())
+
 app.use(
   session({
     secret: 'Super secret secret',
@@ -38,12 +37,36 @@ app.use(
     resave: false,
   })
 );
-
+app.use(passport.initialize())
+app.use(passport.session())
 //app.use('/', indexRouter);
 app.use('/user', userRouter)
 
-const server = app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
+//const SERVER = http.createServer();
 
+app.listen(PORT);
+app.on("listening", () => {
+  console.log("[Server]: LISTEN:%s", PORT);
+});
 
+app.on("error", error => {
+  throw new Error(`[Server]::ERROR:${error.message}`)
+})
 
+const io = require('socket.io')(5000)
+
+io.on('connection', socket => {
+  const id = socket.handshake.query.id
+  socket.join(id)
+
+  socket.on('send-message', ({ recipients, text }) => {
+    recipients.forEach(recipient => {
+      const newRecipients = recipients.filter(r => r !== recipient)
+      newRecipients.push(id)
+      socket.broadcast.to(recipient).emit('receive-message', {
+        recipients: newRecipients, sender: id, text
+      })
+    })
+  })
+})
 module.exports = app;

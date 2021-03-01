@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 const PREFIX = 'dnd'
 
-export default function useStorage(key, initialValue) {
+function useStorage(key, initialValue) {
   const prefixedKey = PREFIX + key
   const [value, setValue] = useState(() => {
     const jsonValue = localStorage.getItem(prefixedKey)
@@ -21,3 +21,5 @@ export default function useStorage(key, initialValue) {
 
   return [value, setValue]
 }
+
+export default useStorage;

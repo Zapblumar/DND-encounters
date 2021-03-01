@@ -13,7 +13,8 @@ passport.use('local-signup', signup);
 // passport.use('local-twitter', twitter);
 // passport.use('local-github', github);
 passport.serializeUser(async (user, done) => {
-  await done(null, user.id);
+  console.log(user._id)
+  await done(null, user._id);
 });
 
 passport.deserializeUser(async (id, done) => {

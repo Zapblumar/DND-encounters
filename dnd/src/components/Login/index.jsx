@@ -1,30 +1,27 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Profile from "../profile";
+import Profile from "../Profile";
 
-function Login() {
+function Login({ onUserSubmit }) {
   const [user, setUser] = useState({
-    userName: "",
+    username: "",
     email: "",
     password: "",
   });
 
-  const { userName, email, password } = user;
+  const { username, email, password } = user;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     console.log("Submit Form", user);
 
-    axios.post("/user/signin", {
-      method: "POST",
-      user: {
-        userName,
-        password,
-        email,
-      },
+    const res = await axios.post("/user/signin", {
+      username,
+      password,
+      email,
     });
-    return <Profile />;
+    onUserSubmit(res.data);
   };
 
   const handleChange = (e) => {
@@ -37,8 +34,8 @@ function Login() {
       <h1 data-testid="h1tag">Login</h1>
       <form id="contact-form" onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="userName">Name:</label>
-          <input type="text" name="userName" onBlur={handleChange} />
+          <label htmlFor="username">Name:</label>
+          <input type="text" name="username" onBlur={handleChange} />
         </div>
         <div>
           <label htmlFor="email">Email address:</label>
