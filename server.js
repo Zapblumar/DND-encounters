@@ -52,21 +52,22 @@ app.on("listening", () => {
 app.on("error", error => {
   throw new Error(`[Server]::ERROR:${error.message}`)
 })
+const fs = require("fs");
+const server = require("https").createServer({
+  cert: fs.readFileSync("./cert.pem"),
+  key: fs.readFileSync("./key.pem")
+});
+const io = require("socket.io")(server);
 
-const io = require('socket.io')(5000)
-
+// io.on("connection", (socket) => {
+//   console.log(socket.handshake.auth); // prints { token: "abcd" }
+// });
 io.on('connection', socket => {
+  //withCredentials: true **COME BACK TO***
   const id = socket.handshake.query.id
   socket.join(id)
 
-  socket.on('send-message', ({ recipients, text }) => {
-    recipients.forEach(recipient => {
-      const newRecipients = recipients.filter(r => r !== recipient)
-      newRecipients.push(id)
-      socket.broadcast.to(recipient).emit('receive-message', {
-        recipients: newRecipients, sender: id, text
-      })
-    })
-  })
 })
+
+
 module.exports = app;
