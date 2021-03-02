@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const socket = require("socket.io");
 const router = express.Router();
 const morgan = require('morgan')
 const passport = require('passport');
@@ -27,10 +26,10 @@ const PORT = process.env.PORT || 3001;
 app.use(morgan('tiny'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('./public'));
+
 //app.use(require('cookie-parser')());
 const session = require('express-session');
-app.use(passport.initialize())
+
 app.use(
   session({
     secret: 'Super secret secret',
@@ -38,15 +37,37 @@ app.use(
     resave: false,
   })
 );
-
+app.use(passport.initialize())
+app.use(passport.session())
 //app.use('/', indexRouter);
 app.use('/user', userRouter)
 
-const server = app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
+//const SERVER = http.createServer();
 
+app.listen(PORT);
+app.on("listening", () => {
+  console.log("[Server]: LISTEN:%s", PORT);
+});
 
-const io = socket(server);
+app.on("error", error => {
+  throw new Error(`[Server]::ERROR:${error.message}`)
+})
+const fs = require("fs");
+const server = require("https").createServer({
+  cert: fs.readFileSync("./cert.pem"),
+  key: fs.readFileSync("./key.pem")
+});
+const io = require("socket.io")(server);
 
-io.on('connection', (socket) => console.log(`connection is made`))
+// io.on("connection", (socket) => {
+//   console.log(socket.handshake.auth); // prints { token: "abcd" }
+// });
+io.on('connection', socket => {
+  //withCredentials: true **COME BACK TO***
+  const id = socket.handshake.query.id
+  socket.join(id)
+
+})
+
 
 module.exports = app;

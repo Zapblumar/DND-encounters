@@ -1,11 +1,8 @@
+import axios from "axios";
 import React, { Component, useState } from "react";
 
-function Signup() {
-  // const signingup = (event) => {
-  //   console.log("start");
-  //   event.preventDefault();
-
-  function handleSubmit(e) {
+const Signup = ({ onUserSubmit }) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const newUser = [...formData.entries()].reduce((obj, [key, value]) => {
@@ -14,24 +11,15 @@ function Signup() {
     }, {});
 
     console.log("here", JSON.stringify(newUser));
-    fetch("/user/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newUser),
-    })
-      .then((response) => {
-        console.log("data:", response.data);
-      })
-      .catch((error) => {
-        console.log("error", error.response);
-      });
-  }
-  // };
+    const res = await axios.post("/user/signup", newUser);
+
+    onUserSubmit(res.data);
+  };
+
   //JSX
   return (
     <div>
+      <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <h3>User Name</h3>
         <input type="text" name="username" />
@@ -43,6 +31,6 @@ function Signup() {
       </form>
     </div>
   );
-}
+};
 
 export default Signup;

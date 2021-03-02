@@ -13,7 +13,7 @@ router.post('/signup',
   passport.authenticate('local-signup'),
   function (req, res) {
 
-    if (!req.user) { return res.redirect('/signin'); }
+    if (!req.user) { return res.redirect('/Login'); }
     req.logIn(req.user, function (err) {
       if (err) { return next(err); }
       return res.send(req.user)
@@ -43,14 +43,24 @@ router.delete('/deleteUser', ({ params }, res) => {
     .catch(err => res.status(400).json(err));
 })
 
-router.post('/signin', passport.authenticate('local-signup'),
-  function (req, res) {
+router.post('/signin',
+  function (req, res, next) {
 
-    if (!req.user) { return res.redirect('/signin'); }
-    req.logIn(req.user, function (err) {
-      if (err) { return next(err); }
-      return res.redirect(req.user.userName);
-    });
+    console.log("route", req.body)
+    next()
+
+  },
+  passport.authenticate('local-signin'),
+  (req, res) => {
+    User.findOne(req.body.User)
+      .then(dbUserData => {
+        if (!dbUserData) {
+          res.status(404).json({ message: 'No user found with this id!' });
+          return;
+        }
+        res.json(dbUserData);
+      })
+      .catch(err => res.status(400).json(err));
   })
 
 module.exports = router;
