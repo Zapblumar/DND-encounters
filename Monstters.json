@@ -1,0 +1,10 @@
+[
+  { "monsterName": "Goblins", "AC": "15", "Health": "7" },
+  { "monsterName": " Orcs", "AC": "13", "Health": "15" },
+  { "monsterName": "Wolves", "AC": " ", "Health": "" },
+  { "monsterName": "Trolls", "AC": "15", "Health": "84" },
+  { "monsterName": "Zombies", "AC": "8", "Health": "22" },
+  { "monsterName": "Skeletons", "AC": "13", "Health": "13" },
+  { "monsterName": "Ogre", "AC": "11", "Health": "59" },
+  { "monsterName": "Mimics", "AC": "12", "Health": "58" }
+]
