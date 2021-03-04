@@ -1,11 +1,11 @@
-const express = require('express');
-const socketIo = require('socket.io');
-
-const mongoose = require('mongoose');
-const router = express.Router();
-const morgan = require('morgan')
-const passport = require('passport');
 require('dotenv').config();
+const http = require('http')
+const express = require('express');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const passport = require('passport');
+const session = require('express-session');
+
 
 //const indexRouter = require('./routes/index');
 const userRouter = require('./routes/users');
@@ -23,7 +23,7 @@ mongoose.set('debug', true);
 
 
 const app = express();
-
+const httpServer = http.createServer(app)
 const PORT = process.env.PORT || 3001;
 
 app.use(morgan('tiny'))
@@ -31,7 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //app.use(require('cookie-parser')());
-const session = require('express-session');
+
 
 app.use(
   session({
@@ -47,7 +47,6 @@ app.use('/user', userRouter)
 
 //const SERVER = http.createServer();
 
-app.listen(PORT);
 app.on("listening", () => {
   console.log("[Server]: LISTEN:%s", PORT);
 });
@@ -55,13 +54,11 @@ app.on("listening", () => {
 app.on("error", error => {
   throw new Error(`[Server]::ERROR:${error.message}`)
 })
-const server = require("https").createServer(app)
 
-const io = require("socket.io")(server, {
+const io = require("socket.io")(httpServer, {
   cors: {
     origin: ["http://localhost:3001", "http://localhost:3000"],
-    allowedHeaders: ["my-custom-header"],
-    credentials: true
+    methods: ["GET", "POST"]
   }
 });
 
@@ -88,6 +85,6 @@ const getApiAndEmit = socket => {
 //   console.log(socket.handshake.auth); // prints { token: "abcd" }
 // });
 
-
+httpServer.listen(PORT)
 
 module.exports = app;

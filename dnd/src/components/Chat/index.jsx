@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://localhost:3001";
+const ENDPOINT = "http://localhost:3000";
 
 function Chat({ user }) {
   const [response, setResponse] = useState("");
 
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
+    const socket = socketIOClient();
     socket.on("/chat", (data) => {
       setResponse(data);
     });
