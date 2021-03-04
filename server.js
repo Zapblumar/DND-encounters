@@ -1,4 +1,6 @@
 const express = require('express');
+const socketIo = require('socket.io');
+
 const mongoose = require('mongoose');
 const router = express.Router();
 const morgan = require('morgan')
@@ -6,7 +8,8 @@ const passport = require('passport');
 require('dotenv').config();
 
 //const indexRouter = require('./routes/index');
-const userRouter = require('./routes/users')
+const userRouter = require('./routes/users');
+const chatRoute = require("./routes/chat")
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/DND-encounters', {
   useFindAndModify: false,
   useNewUrlParser: true,
@@ -39,7 +42,7 @@ app.use(
 );
 app.use(passport.initialize())
 app.use(passport.session())
-//app.use('/', indexRouter);
+app.use('/chat', chatRoute);
 app.use('/user', userRouter)
 
 //const SERVER = http.createServer();
@@ -52,22 +55,39 @@ app.on("listening", () => {
 app.on("error", error => {
   throw new Error(`[Server]::ERROR:${error.message}`)
 })
-const fs = require("fs");
-const server = require("https").createServer({
-  cert: fs.readFileSync("./cert.pem"),
-  key: fs.readFileSync("./key.pem")
-});
-const io = require("socket.io")(server);
+const server = require("https").createServer(app)
 
+const io = require("socket.io")(server, {
+  cors: {
+    origin: ["http://localhost:3001", "http://localhost:3000"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true
+  }
+});
+
+let interval;
+
+io.on("connection", (socket) => {
+  console.log("New client connected");
+  if (interval) {
+    clearInterval(interval);
+  }
+  interval = setInterval(() => getApiAndEmit(socket), 1000);
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+    clearInterval(interval);
+  });
+});
+
+const getApiAndEmit = socket => {
+  const response = new Date();
+  // Emitting a new message. Will be consumed by the client
+  socket.emit("/chat", response);
+};
 // io.on("connection", (socket) => {
 //   console.log(socket.handshake.auth); // prints { token: "abcd" }
 // });
-io.on('connection', socket => {
-  //withCredentials: true **COME BACK TO***
-  const id = socket.handshake.query.id
-  socket.join(id)
 
-})
 
 
 module.exports = app;

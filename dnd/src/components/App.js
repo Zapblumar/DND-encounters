@@ -4,12 +4,12 @@ import Login from './Login'
 import Signup from './Signup';
 import NotFound from './notFound';
 import Home from './home';
-//import Chat from './Chat';
+import Chat from './Chat';
 import useStorage from './useStorage';
 import Nav from './Navbar';
 
 const PAGE = {
-  Home, Signup, Login, Profile
+  Home, Signup, Login, Profile, Chat
 };
 
 
@@ -27,7 +27,7 @@ function App() {
 
 
       <main>
-        {user ? <Profile user={user} /> : <Page onUserSubmit={setUser} />}
+        {user ? <Chat user={user} /> : <Page onUserSubmit={setUser} />}
 
 
 
