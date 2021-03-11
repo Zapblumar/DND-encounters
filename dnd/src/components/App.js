@@ -7,6 +7,7 @@ import Home from './home';
 import Chat from './Chat';
 import useStorage from './useStorage';
 import Nav from './Navbar';
+import Footer from './Footer';
 
 const PAGE = {
   Home, Signup, Login, Chat
@@ -32,6 +33,7 @@ function App() {
 
 
       </main>
+      <Footer />
     </div>
   )
 }

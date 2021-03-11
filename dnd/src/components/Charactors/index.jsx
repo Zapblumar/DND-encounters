@@ -12,7 +12,7 @@ function Charactor() {
     }, {});
 
     console.log("here", JSON.stringify(newUser));
-
+    //going to be from dnd fetch
     fetch("/user/signup", {
       method: "POST",
       headers: {
