@@ -6,7 +6,12 @@
   "scripts": {
     "server": "nodemon server.js",
     "dnd": "npm start --prefix dnd",
-    "dev": "concurrently \"npm run server\" \"npm run dnd\""
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "npm start",
+    "start:dev": "concurrently \"npm run watch\" \"cd dnd && npm start\"",
+    "install": "npm i && cd ../dnd && npm i",
+    "seed": "npm run seed",
+    "heroku-postbuild": "cd dnd && npm run build"
   },
   "repository": {
     "type": "git",
