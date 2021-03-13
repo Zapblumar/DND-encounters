@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Profile from "../Profile";
 
 function Login({ onUserSubmit }) {
   const [user, setUser] = useState({
