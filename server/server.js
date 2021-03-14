@@ -50,37 +50,32 @@ app.on("error", (error) => {
 
 const io = require("socket.io")(httpServer, {
   cors: {
-    origin: ["http://localhost:3001", "http://localhost:3000"],
+    origin: "https://game-mater-chat.herokuapp.com/",
     methods: ["GET", "POST"],
   },
 });
 
-
 io.on("connection", (socket) => {
   console.log("New client connected");
 
-  socket.on('message', ({ body, id }) => {
-    console.log(body)
+  socket.on("message", ({ body, id }) => {
+    console.log(body);
     //check factor
-    io.emit("message", { body })
-
-  })
+    io.emit("message", { body });
+  });
   socket.on("disconnect", () => {
     console.log("Client disconnected");
-
   });
 });
 
-
 const getApiAndEmit = (socket) => {
-
   // Emitting a new message. Will be consumed by the client
   socket.emit("/chat");
 };
 // io.on("connection", (socket) => {
 //   console.log(socket.handshake.auth); // prints { token: "abcd" }
 // });
-DB.once('open', () => {
+DB.once("open", () => {
   httpServer.listen(PORT);
-})
+});
 module.exports = app;
