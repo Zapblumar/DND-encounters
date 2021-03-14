@@ -80,7 +80,7 @@ const getApiAndEmit = (socket) => {
 // io.on("connection", (socket) => {
 //   console.log(socket.handshake.auth); // prints { token: "abcd" }
 // });
-
-httpServer.listen(PORT);
-
+DB.once('open', () => {
+  httpServer.listen(PORT);
+})
 module.exports = app;

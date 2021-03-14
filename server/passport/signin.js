@@ -1,6 +1,6 @@
 const { Strategy } = require('passport-local');
 const passport = require('passport');
-const User = require('../server/model/User');
+const User = require('../model/User');
 const bcrypt = require('bcrypt');
 const salt = bcrypt.genSaltSync(10)
 
