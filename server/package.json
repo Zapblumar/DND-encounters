@@ -1,8 +1,8 @@
 {
-  "name": "dnd-encounters",
+  "name": "sever",
   "version": "1.0.0",
   "description": "rpg",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "server": "nodemon server.js",
     "dnd": "npm start --prefix dnd",

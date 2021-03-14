@@ -1,6 +1,5 @@
 const passport = require('passport');
-const User = require('../server/model/User')
-
+const User = require('../model/User');
 //const google = require('./google');
 const signin = require('./signin');
 const signup = require('./signup');

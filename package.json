@@ -1,12 +1,12 @@
 {
-  "name": "book-search",
+  "name": "dnd-encounters",
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "cd server && npm start",
-    "start:dev": "concurrently \"cd server && npm run watch\" \"cd dnd && npm start\"",
+    "start:dev": "concurrently \"cd server && npm run server\" \"cd dnd && npm start\"",
     "install": "cd server && npm i && cd ../dnd && npm i",
     "heroku-postbuild": "cd dnd && npm run build"
   },
