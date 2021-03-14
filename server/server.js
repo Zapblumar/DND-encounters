@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require("path");
 const http = require("http");
 const express = require("express");
 const mongoose = require("mongoose");
@@ -50,7 +51,7 @@ app.on("error", (error) => {
 
 const io = require("socket.io")(httpServer, {
   cors: {
-    origin: "https://game-mater-chat.herokuapp.com/",
+    origin: ["https://localhost:3001", "https://localhost:3000"],
     methods: ["GET", "POST"],
   },
 });
@@ -75,6 +76,13 @@ const getApiAndEmit = (socket) => {
 // io.on("connection", (socket) => {
 //   console.log(socket.handshake.auth); // prints { token: "abcd" }
 // });
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../dnd/build")));
+}
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../dnd/build/index.html"));
+});
+
 DB.once("open", () => {
   httpServer.listen(PORT);
 });
