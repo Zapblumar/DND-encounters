@@ -41,14 +41,6 @@ app.use("/user", userRouter);
 
 //const SERVER = http.createServer();
 
-app.on("listening", () => {
-  console.log("[Server]: LISTEN:%s", PORT);
-});
-
-app.on("error", (error) => {
-  throw new Error(`[Server]::ERROR:${error.message}`);
-});
-
 const io = require("socket.io")(httpServer, {
   cors: {
     origin: ["https://localhost:3001", "https://localhost:3000"],
@@ -84,6 +76,9 @@ app.get("*", (req, res) => {
 });
 
 DB.once("open", () => {
-  httpServer.listen(PORT);
+  httpServer.listen(PORT, (error) => {
+    if (error) throw new Error(`[Server]::ERROR:${error.message}`);
+    console.log("[Server]: LISTEN:%s", PORT);
+  });
 });
 module.exports = app;
