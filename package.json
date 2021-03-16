@@ -20,6 +20,7 @@
   "dependencies": {
     "audit": "0.0.6",
     "fix": "0.0.6",
+    "graphql": "^15.5.0",
     "if-env": "^1.0.4"
   },
   "devDependencies": {
