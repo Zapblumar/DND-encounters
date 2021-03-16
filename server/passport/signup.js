@@ -1,7 +1,7 @@
 const { Strategy } = require('passport-local');
 const User = require('../model/User');
 const bcrypt = require('bcrypt');
-const salt = bcrypt.genSaltSync(10)
+
 
 const signupStrategy = new Strategy({ passReqToCallback: true }, async (req, userName, password, done) => {
   const userEmail = req.body.email;
@@ -12,7 +12,7 @@ const signupStrategy = new Strategy({ passReqToCallback: true }, async (req, use
       return done('User already exist', null);
     }
 
-    const hidedPassword = bcrypt.hashSync(password, salt);
+    const hidedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
     const newUser = await User.create({
       userName,
       userEmail,

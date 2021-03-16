@@ -10,6 +10,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "fs": "0.0.1-security",
+    "graphql": "^15.5.0",
     "pwa": "^1.9.7",
     "query-string": "^6.14.1",
     "react": "^17.0.1",

@@ -1,7 +1,9 @@
 const { Schema, model } = require('mongoose');
+const bcrypt = require('bcrypt');
+
 
 // for Tylor to complete
-const UserSchema = new Schema({
+const userSchema = new Schema({
   userName: {
     type: String,
     unique: true,
@@ -19,6 +21,19 @@ const UserSchema = new Schema({
     minLength: 6
   }
 })
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('userPassword')) return next()
+  try {
+    this.userPassword = await bcrypt.hash(this.userPassword, await bcrypt.genSalt(10))
+    next()
 
-const User = model('User', UserSchema);
+  }
+  catch (error) {
+    next(error)
+  }
+})
+userSchema.methods.isCorrectPassword = function (password) {
+  return bcrypt.compare(password, this.userPassword)
+}
+const User = model('User', userSchema);
 module.exports = User;
