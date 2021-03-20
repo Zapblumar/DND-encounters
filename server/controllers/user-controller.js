@@ -1,4 +1,5 @@
-const { User } = require('../models');
+
+const { User, Character } = require('../model');
 const { signToken } = require('../utils/auth');
 
 module.exports = {
@@ -24,7 +25,15 @@ module.exports = {
     const token = signToken(user);
     res.json({ token, user });
   },
+  async createCharacter({ body }, res) {
+    const char = await Character.create(body);
 
+    if (!char) {
+      return res.status(400).json({ message: 'Something is wrong!' });
+    }
+
+    res.json(user);
+  },
   async login({ body }, res) {
     const user = await User.findOne({ $or: [{ username: body.username }, { email: body.email }] });
     if (!user) {

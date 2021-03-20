@@ -7,6 +7,7 @@ import Signup from './Signup';
 import NotFound from './notFound';
 import Home from './home';
 import Chat from './Chat';
+import Character from './Characters';
 import useStorage from './useStorage';
 import Nav from './Navbar';
 import Footer from './Footer';
@@ -26,7 +27,12 @@ function App() {
       <Nav currentPage={currentPage} handlePageChange={handlePageChange}></Nav>
 
       <main>
-        {user ? <Chat user={user} /> : <Page onUserSubmit={setUser} />}
+
+        {user ? <Character user={user} /> : <Page onUserSubmit={setUser} />}
+
+
+
+
       </main>
       <Footer />
     </div>

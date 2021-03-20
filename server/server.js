@@ -9,9 +9,10 @@ const passport = require("passport");
 const session = require("express-session");
 const DB = require("./config/connection");
 const { typeDefs, resolvers } = require('./schema');
-const { GraphQLLocalStrategy, buildContext } = require("graphql-passport");
-const userRouter = require("./routes/users");
-const chatRoute = require("./routes/chat");
+const { authContext } = require('./utils/auth');
+const userRouter = require("./routes/user");
+//const chatRoute = require("./routes/chat");
+
 
 // Use this to log mongo queries being executed!
 mongoose.set("debug", true);
@@ -37,7 +38,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use("/chat", chatRoute);
+//app.use("/chat", chatRoute);
 app.use("/user", userRouter);
 
 
@@ -50,7 +51,7 @@ app.use("/user", userRouter);
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  // context: ({ req, res }) => buildContext({ req, res, User })
+  context: authContext
 });
 
 server.applyMiddleware({ app, cors: false });

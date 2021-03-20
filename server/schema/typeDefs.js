@@ -10,7 +10,14 @@ const typeDefs = gql`
   AC: Int
   Health: Int
   }
-
+type Character {
+  charname: String
+  race: String
+  class: String
+  hp: Int 
+  stat: Int
+notes: [String]
+}
   
   type User {
     _id: ID
