@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require("path");
 const http = require("http");
 const { ApolloServer } = require("apollo-server-express");
 const express = require("express");
@@ -39,6 +40,7 @@ app.use(passport.session());
 app.use("/chat", chatRoute);
 app.use("/user", userRouter);
 
+
 // context.authenticate("graphql-local", { email, password }); // not available for subscriptions
 // context.login(user); // not available for subscriptions
 // context.logout(); // not available for subscriptions
@@ -53,39 +55,45 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app, cors: false });
 
+
 const io = require("socket.io")(httpServer, {
   cors: {
-    origin: ["http://localhost:3001", "http://localhost:3000"],
+    origin: ["https://localhost:3001", "https://localhost:3000"],
     methods: ["GET", "POST"],
   },
 });
 
-
 io.on("connection", (socket) => {
   console.log("New client connected");
 
-  socket.on('message', ({ body, id }) => {
-    console.log(body)
+  socket.on("message", ({ body, id }) => {
+    console.log(body);
     //check factor
-    io.emit("message", { body })
-
-  })
+    io.emit("message", { body });
+  });
   socket.on("disconnect", () => {
     console.log("Client disconnected");
-
   });
 });
 
-
 const getApiAndEmit = (socket) => {
-
   // Emitting a new message. Will be consumed by the client
   socket.emit("/chat");
 };
 // io.on("connection", (socket) => {
 //   console.log(socket.handshake.auth); // prints { token: "abcd" }
 // });
-DB.once('open', () => {
-  httpServer.listen(PORT);
-})
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../dnd/build")));
+}
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../dnd/build/index.html"));
+});
+
+DB.once("open", () => {
+  httpServer.listen(PORT, (error) => {
+    if (error) throw new Error(`[Server]::ERROR:${error.message}`);
+    console.log("[Server]: LISTEN:%s", PORT);
+  });
+});
 module.exports = app;
