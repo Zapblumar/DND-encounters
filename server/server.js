@@ -1,14 +1,15 @@
 require("dotenv").config();
 const path = require("path");
 const http = require("http");
+const { ApolloServer } = require("apollo-server-express");
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const passport = require("passport");
 const session = require("express-session");
 const DB = require("./config/connection");
-
-//const indexRouter = require('./routes/index');
+const { typeDefs, resolvers } = require('./schema');
+const { GraphQLLocalStrategy, buildContext } = require("graphql-passport");
 const userRouter = require("./routes/users");
 const chatRoute = require("./routes/chat");
 
@@ -39,7 +40,21 @@ app.use(passport.session());
 app.use("/chat", chatRoute);
 app.use("/user", userRouter);
 
-//const SERVER = http.createServer();
+
+// context.authenticate("graphql-local", { email, password }); // not available for subscriptions
+// context.login(user); // not available for subscriptions
+// context.logout(); // not available for subscriptions
+// context.isAuthenticated();
+// context.isUnauthenticated();
+// context.getUser();
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  // context: ({ req, res }) => buildContext({ req, res, User })
+});
+
+server.applyMiddleware({ app, cors: false });
+
 
 const io = require("socket.io")(httpServer, {
   cors: {
