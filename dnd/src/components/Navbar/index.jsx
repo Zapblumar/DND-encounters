@@ -2,7 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Nav({ handlePageChange, currentPage }) {
-  const tabs = ["Home", "Signup", "Login", "Chat"];
+  const tabs = ["Home", "Signup", "Login", "Chat", "LogOut"];
   return (
     <header className="row ml-2">
       <h2>

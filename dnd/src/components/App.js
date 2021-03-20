@@ -1,18 +1,19 @@
-import React, { useState } from "react";
-import Login from "./Login";
-import Signup from "./Signup";
-import NotFound from "./notFound";
-import Home from "./home";
-import Chat from "./Chat";
-import useStorage from "./useStorage";
-import Nav from "./Navbar";
-import Footer from "./Footer";
+
+import React, { useState } from 'react'
+import './App.css';
+import Login from './Login';
+import LogOut from './LogOut'
+import Signup from './Signup';
+import NotFound from './notFound';
+import Home from './home';
+import Chat from './Chat';
+import useStorage from './useStorage';
+import Nav from './Navbar';
+import Footer from './Footer';
 
 const PAGE = {
-  Home,
-  Signup,
-  Login,
-  Chat,
+  Home, Signup, Login, Chat, LogOut
+
 };
 
 function App() {
