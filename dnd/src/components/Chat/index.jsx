@@ -1,19 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
 import socketIOClient from "socket.io-client";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.css";
 const ENDPOINT = "http://localhost:3000";
 
 function Chat({ user }) {
-  // const [response, setResponse] = useState("");
-
-  // useEffect(() => {
-  //   const socket = socketIOClient();
-  //   socket.on("/chat", (data) => {
-  //     setResponse(data);
-  //   });
-  // }, []);
-
-  // return (
   const [yourID, setYourID] = useState();
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
@@ -40,6 +31,7 @@ function Chat({ user }) {
     const messageObject = {
       body: message,
       id: yourID,
+      name: user.userName,
     };
     setMessage("");
     console.log(socket);
@@ -52,23 +44,27 @@ function Chat({ user }) {
 
   return (
     <div className="chat">
-      <div className="Container">
-        {messages.map((message, index) => {
-          if (message.id === yourID) {
+      <div className="container">
+        <div className="col-2 ">
+          {messages.map((message, index) => {
+            if (message.id === yourID) {
+              return <p key={index}>{message.body}</p>;
+            }
             return <p key={index}>{message.body}</p>;
-          }
-          return <p key={index}>{message.body}</p>;
-        })}
+          })}
+
+          <form className="form" onSubmit={sendMessage}>
+            <a>{user.userName}</a>
+            <input
+              value={message}
+              onChange={handleChange}
+              placeholder="Say something..."
+            />
+            <Button type="submit">Send</Button>
+          </form>
+        </div>
+        <div className="col-2 bg-light">CHARACTOR </div>
       </div>
-      <form className="form" onSubmit={sendMessage}>
-        <a>{user.userName}</a>
-        <input
-          value={message}
-          onChange={handleChange}
-          placeholder="Say something..."
-        />
-        <button type="submit">Send</button>
-      </form>
     </div>
   );
 }
