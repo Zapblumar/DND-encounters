@@ -11,7 +11,7 @@ const Signup = ({ onUserSubmit }) => {
     }, {});
 
     console.log("here", JSON.stringify(newUser));
-    const res = await axios.post("/user/signup", newUser);
+    const res = await axios.post("/user/", newUser);
 
     onUserSubmit(res.data);
   };
@@ -22,11 +22,11 @@ const Signup = ({ onUserSubmit }) => {
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <h3>User Name</h3>
-        <input type="text" name="username" />
+        <input type="text" name="userName" />
         <h3>User Email</h3>
-        <input type="text" name="email" />
+        <input type="text" name="userEmail" />
         <h3>Password</h3>
-        <input type="password" name="password" />
+        <input type="password" name="userPassword" />
         <button type="submit">Signup</button>
       </form>
     </div>

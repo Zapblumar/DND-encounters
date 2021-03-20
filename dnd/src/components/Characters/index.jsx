@@ -1,6 +1,7 @@
 import React, { Component, useState } from "react";
+import axios from "axios";
 
-function Charactor() {
+function Character(onCharSubmit) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -12,13 +13,13 @@ function Charactor() {
     console.log("here", JSON.stringify(newChar));
     const res = await axios.post("/user/char", newChar);
 
-    onUserSubmit(res.data);
+    onCharSubmit(res.data);
   };
 
   //JSX
   return (
-    <div>
-      <h1>Create Charactor</h1>
+    <div className="align-items-center d-flex">
+      <h1 className="boarder-right">Create Charactor</h1>
       <form onSubmit={handleSubmit}>
         <h3>Char Name</h3>
         <input type="text" name="charname" />
@@ -39,4 +40,4 @@ function Charactor() {
   );
 }
 
-export default Charactor;
+export default Character;
