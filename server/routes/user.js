@@ -20,9 +20,9 @@ router.route('/login').post(login);
 
 router.route('/me').get(authMiddleware, getSingleUser);
 
-router.route('/character').post(createCharacter);
+router.route('/char').post(createCharacter);
 
-router.route('/char').post(getCharacter);
+router.route('/character').post(getCharacter);
 
 
 module.exports = router;
