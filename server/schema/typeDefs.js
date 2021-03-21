@@ -11,7 +11,7 @@ const typeDefs = gql`
   Health: Int
   }
 type Character {
-  charname: String
+  user(username: String): User 
   race: String
   class: String
   hp: Int 

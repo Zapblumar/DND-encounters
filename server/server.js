@@ -27,27 +27,14 @@ app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//app.use(require('cookie-parser')());
 
-app.use(
-  session({
-    secret: "Super secret secret",
-    cookie: { expires: 10 * 60 * 1000 },
-    resave: false,
-  })
-);
+
 app.use(passport.initialize());
 app.use(passport.session());
 //app.use("/chat", chatRoute);
 app.use("/user", userRouter);
 
 
-// context.authenticate("graphql-local", { email, password }); // not available for subscriptions
-// context.login(user); // not available for subscriptions
-// context.logout(); // not available for subscriptions
-// context.isAuthenticated();
-// context.isUnauthenticated();
-// context.getUser();
 const server = new ApolloServer({
   typeDefs,
   resolvers,

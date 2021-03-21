@@ -15,7 +15,7 @@ function Login({ onUserSubmit }) {
 
     console.log("Submit Form", user);
 
-    const res = await axios.post("/user/signin", {
+    const res = await axios.post("/user/login", {
       username,
       password,
       email,
