@@ -1,18 +1,28 @@
 import React, { Component, useState } from "react";
 import axios from "axios";
 
-function Character({ user }, onCharSubmit) {
+function Character({ user, onCharSubmit }) {
+  const [character, setCharacter] = useState({
+    username: user.userName,
+    race: "",
+    class: "",
+    hp: "",
+    stat: "",
+    notes: "",
+  });
+  const { username, race, hp, stat, notes } = character;
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
+    const formData = new FormData(e.target, user);
+    console.log(formData);
     const newChar = [...formData.entries()].reduce((obj, [key, value]) => {
       obj[key] = value;
       return obj;
     }, {});
 
     console.log("here", JSON.stringify(newChar));
-    const res = await axios.post("/user/char", newChar);
-
+    const res = await axios.post("/user/char", newChar, user);
+    setCharacter({ ...character, [e.target.name]: e.target.value });
     onCharSubmit(res.data);
   };
 

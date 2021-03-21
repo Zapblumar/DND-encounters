@@ -2,9 +2,9 @@ const Character = require('../model/Character');
 
 module.exports = {
 
-  async createCharacter({ body }, res) {
-    const char = await Character.create(body);
-
+  async createCharacter({ body, user }, res) {
+    const char = await Character.create({ ...body, user });
+    console.log(user)
     if (!char) {
       return res.status(400).json({ message: 'Something is wrong!' });
     }

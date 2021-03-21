@@ -29,8 +29,8 @@ app.use(express.urlencoded({ extended: true }));
 
 
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 //app.use("/chat", chatRoute);
 app.use("/user", userRouter);
 
