@@ -46,6 +46,11 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    createCharacter: (parent, { character }, context) => {
+      if (!context.user) throw new AuthenticationError('You are not login');
+
+      return Character.create({ ...character, user: context.user._id })
+    },
   }
 };
 

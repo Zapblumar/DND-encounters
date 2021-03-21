@@ -5,7 +5,7 @@ import { Button, Form, Col, Container, Tab } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 const ENDPOINT = "http://localhost:3000";
 
-function Chat({ user }) {
+function Chat({ character }) {
   const [yourID, setYourID] = useState();
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
@@ -32,7 +32,6 @@ function Chat({ user }) {
     const messageObject = {
       body: message,
       id: yourID,
-      name: user.userName,
     };
     setMessage("");
     console.log(socket);
@@ -59,7 +58,7 @@ function Chat({ user }) {
             className=" border-top border-right border-bottom border-left "
             onSubmit={sendMessage}
           >
-            <a>{user.userName}</a>
+            <a>{character.race}</a>
             <input
               value={message}
               onChange={handleChange}

@@ -4,7 +4,11 @@ const { Schema, model } = require('mongoose');
 
 // for Tylor to complete need to link user to it
 const characterSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
 
+  },
   race: {
     type: String,
   },

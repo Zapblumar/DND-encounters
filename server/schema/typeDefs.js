@@ -11,13 +11,22 @@ const typeDefs = gql`
   Health: Int
   }
 type Character {
-  user(username: String): User 
+  _id: ID
+  user: User
   race: String
   class: String
   hp: Int 
   stat: Int
-notes: [String]
+  notes: [String]
 }
+input CharacterInput {
+  race: String!
+  class: String!
+  hp: Int!
+  stat: Int!
+  notes: [String!]
+}
+  
   
   type User {
     _id: ID
@@ -34,6 +43,7 @@ type Auth {
 type Mutation {
   login(email: String!, password: String!): Auth
   addUser(userName: String!, userEmail: String!, userPassword: String!): Auth
+  createCharacter(character:CharacterInput!): Character
 }
 
 `;

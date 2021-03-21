@@ -18,17 +18,18 @@ const PAGE = {
 };
 
 function App() {
+  const [character, setCharacter] = useStorage("character");
   const [user, setUser] = useStorage("user");
   const [currentPage, handlePageChange] = useState("Home");
   const Page = PAGE[currentPage];
-
+  const onCharSubmit = () => { }
   return (
     <div>
       <Nav currentPage={currentPage} handlePageChange={handlePageChange}></Nav>
 
       <main>
 
-        {user ? <Character user={user} /> : <Page onUserSubmit={setUser} />}
+        {character ? <Chat character={character} /> : user ? <Character user={user} onCharSubmit={setCharacter} /> : <Page onUserSubmit={setUser} />}
 
 
 
