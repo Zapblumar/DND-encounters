@@ -31,6 +31,11 @@ function Character({ user }, onCharSubmit) {
           <option value="3">dwarf</option>
           <option value="4">half-elf</option>
           <option value="5">orc</option>
+          <option value="6">dragonborn</option>
+          <option value="7">gnome</option>
+          <option value="8">tiefling</option>
+          <option value="9">tabaxi</option>
+          <option value="10">changeling</option>
         </select>
         <h3>class</h3>
         <select name="Class">
