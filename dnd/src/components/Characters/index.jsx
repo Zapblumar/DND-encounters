@@ -1,7 +1,7 @@
 import React, { Component, useState } from "react";
 import axios from "axios";
 
-function Character(onCharSubmit) {
+function Character({ user }, onCharSubmit) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -21,8 +21,8 @@ function Character(onCharSubmit) {
     <div className="align-items-center d-flex">
       <h1 className="boarder-right">Create Charactor</h1>
       <form onSubmit={handleSubmit}>
-        <h3>Char Name</h3>
-        <input type="text" name="charname" />
+        <h3>Character Name</h3>
+        <h3>{user.userName}</h3>
         <h3>Race</h3>
         <input type="text" name="race" />
         <h3>class</h3>

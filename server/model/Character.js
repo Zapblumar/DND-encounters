@@ -2,11 +2,9 @@ const { Schema, model } = require('mongoose');
 
 
 
-// for Tylor to complete
+// for Tylor to complete need to link user to it
 const characterSchema = new Schema({
-  userName: {
-    User: userName
-  },
+
   race: {
     type: String,
   },
@@ -14,14 +12,14 @@ const characterSchema = new Schema({
     type: String,
   },
   hp: {
-    type: Int
+    type: Number
   },
   stat: {
-    type: Int
+    type: Number
   }
 })
 
 
 
-const Character = model('Character', userSchema);
+const Character = model('Character', characterSchema);
 module.exports = Character;

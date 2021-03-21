@@ -3,8 +3,13 @@ const {
   createUser,
   getSingleUser,
   login,
-} = require('../controllers/user-controller');
 
+} = require('../controllers/user-controller');
+const {
+  createCharacter,
+  getCharacter,
+
+} = require("../controllers/character-controller")
 // import middleware
 const { authMiddleware } = require('../utils/auth');
 
@@ -15,6 +20,9 @@ router.route('/login').post(login);
 
 router.route('/me').get(authMiddleware, getSingleUser);
 
+router.route('/char').post(createCharacter);
+
+router.route('/character').post(getCharacter);
 
 
 module.exports = router;
