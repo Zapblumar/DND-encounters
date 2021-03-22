@@ -72,7 +72,15 @@ function Chat({ character }) {
         </Form>
 
         <Col>
-          <h1>CHARACTER</h1>
+          <h1></h1>
+          <ul>
+            CHARACTER
+            <il>{character.race}</il>
+            <il>{character.class}</il>
+            <il>{character.hp}</il>
+            <il>{character.stat}</il>
+            <il>{character.notes}</il>
+          </ul>
         </Col>
       </Container>
     </div>
