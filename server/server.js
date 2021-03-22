@@ -9,7 +9,7 @@ const passport = require("passport");
 const session = require("express-session");
 const DB = require("./config/connection");
 const { typeDefs, resolvers } = require('./schema');
-const { authContext } = require('./utils/auth');
+const { authMiddleware } = require('./utils/auth');
 const userRouter = require("./routes/user");
 //const chatRoute = require("./routes/chat");
 
@@ -20,28 +20,29 @@ mongoose.set("debug", true);
 // passport
 
 const app = express();
-const httpServer = http.createServer(app);
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: authMiddleware
+});
+
+server.applyMiddleware({ app, cors: false });
+const httpServer = http.createServer(server);
 const PORT = process.env.PORT || 3001;
 
 app.use(morgan("tiny"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 
 
 // app.use(passport.initialize());
 // app.use(passport.session());
 //app.use("/chat", chatRoute);
-app.use("/user", userRouter);
+//app.use("/user", userRouter);
 
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: authContext
-});
 
-server.applyMiddleware({ app, cors: false });
 
 
 const io = require("socket.io")(httpServer, {

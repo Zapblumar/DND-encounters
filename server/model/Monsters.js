@@ -1,5 +1,8 @@
+
+const { Schema, model } = require('mongoose');
+
 //for Tylor
-const UserSchema = new Schema({
+const monstersSchema = new Schema({
   MonsterName: {
     type: String,
   },
@@ -10,3 +13,6 @@ const UserSchema = new Schema({
     type: Number,
   },
 });
+const Monsters = model('Monsters', monstersSchema);
+
+module.exports = Monsters;

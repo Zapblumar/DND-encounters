@@ -32,7 +32,7 @@ function Character({ user, onCharSubmit }) {
       <h1 className="boarder-right">Create Charactor</h1>
       <form onSubmit={handleSubmit}>
         <h3>Character Name</h3>
-        <h3>{user.userName}</h3>
+
         <h3>Race</h3>
         <select name="Race">
           <option value="0" selected="selected"></option>
