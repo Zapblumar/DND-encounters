@@ -76,9 +76,13 @@ function Chat({ character }) {
           <ul>
             CHARACTER
             <il>{character.race}</il>
+            <br />
             <il>{character.class}</il>
+            <br />
             <il>{character.hp}</il>
+            <br />
             <il>{character.stat}</il>
+            <br />
             <il>{character.notes}</il>
           </ul>
         </Col>

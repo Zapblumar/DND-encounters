@@ -27,28 +27,6 @@ module.exports = {
 
     next();
   },
-  authContext: function ({ req }) {
-
-    let token = req.query.token || req.headers.authorization;
-
-
-    if (req.headers.authorization) {
-      token = token.split(' ').pop().trim();
-    }
-
-    if (!token) {
-      return {};
-    }
-
-    try {
-      const { data } = jwt.verify(token, secret, { maxAge: expiration });
-      return { user: data }
-    } catch {
-      console.log('Invalid token');
-      return {};
-    }
-  },
-
   signToken: function ({ userName, userEmail, _id }) {
     const payload = { userName, userEmail, _id };
 

@@ -38,9 +38,7 @@
   height: 40vmin;
   pointer-events: none;
 }
-.App {
-  background-image: url(../images/dnd\ snow.jfif);
-}
+
 .header {
   background-color: aqua;
 }

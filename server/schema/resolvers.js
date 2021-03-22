@@ -1,6 +1,6 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require('../utils/auth');
-const { monsters, User, Character } = require("../model");
+const { Monsters, User, Character } = require("../model");
 
 const resolvers = {
   Query: {
@@ -9,17 +9,20 @@ const resolvers = {
       if (context.user) {
         const userData = await Users.findOne({ _id: context.user._id })
           .select('-__v -password')
+          .populate("character")
         return userData;
       }
 
       throw new AuthenticationError('Not logged in');
     },
-
     user: async (username) => {
       return User.findOne({ username })
         .select('-__v -password')
-
+        .populate("character")
     },
+    character: async (parent, { _id }) => {
+      return Character.findOne({ _id });
+    }
 
   },
 
@@ -31,7 +34,7 @@ const resolvers = {
       return { token, user };
     },
     login: async (parent, { email, password }) => {
-      const user = await User.findOne({ userEmail: email });
+      const user = await User.findOne({ email });
 
       if (!user) {
         throw new AuthenticationError('Incorrect credentials');
@@ -46,10 +49,20 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    createCharacter: (parent, { character }, context) => {
-      if (!context.user) throw new AuthenticationError('You are not login');
+    createCharacter: async (parent, { character }, context) => {
+      if (context.user) {
+        const newCharacter = await Character.create({ ...character, username: context.user.username });
 
-      return Character.create({ ...character, user: context.user._id })
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { character: character._id } },
+          { new: true }
+        );
+
+        return newCharacter;
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
     },
   }
 };

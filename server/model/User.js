@@ -19,6 +19,10 @@ const userSchema = new Schema({
     type: String,
     required: 'Password is Required',
     minLength: 6
+  },
+  character: {
+    type: Schema.Types.ObjectId,
+    ref: "character"
   }
 })
 userSchema.pre('save', async function (next) {
