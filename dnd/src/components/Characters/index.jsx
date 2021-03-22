@@ -34,9 +34,32 @@ function Character({ user, onCharSubmit }) {
         <h3>Character Name</h3>
         <input name="user">{user.userName}</input>
         <h3>Race</h3>
-        <input type="text" name="race" />
+        <select name="Race">
+          <option value="0" selected="selected"></option>
+          <option value="1">elf</option>
+          <option value="2">human</option>
+          <option value="3">dwarf</option>
+          <option value="4">half-elf</option>
+          <option value="5">orc</option>
+          <option value="6">dragonborn</option>
+          <option value="7">gnome</option>
+          <option value="8">tiefling</option>
+          <option value="9">tabaxi</option>
+          <option value="10">changeling</option>
+        </select>
         <h3>class</h3>
-        <input type="text" name="class" />
+        <select name="Class">
+          <option value="0" selected="selected"></option>
+          <option value="1">cleric</option>
+          <option value="2">bard</option>
+          <option value="3">wizard</option>
+          <option value="4">druid</option>
+          <option value="5">barbarian</option>
+          <option value="6">monk</option>
+          <option value="7">sorcerer</option>
+          <option value="8">fighter</option>
+          <option value="9">artificer</option>
+        </select>
         <h3>HP</h3>
         <input type="text" name="hp" />
         <h3>Stats</h3>
