@@ -44,7 +44,7 @@ function Chat({ character }) {
 
   return (
     <div className="chat">
-      <Container style={{ width: "250px" }} className="d-flex flex-column">
+      <div className="col-12 col-md-6">
         <Tab.Content className=" justify-content-center overflow-auto flex-grow-1">
           {messages.map((message, index) => {
             if (message.id === yourID) {
@@ -70,23 +70,22 @@ function Chat({ character }) {
             Send
           </Button>
         </Form>
-
-        <Col>
-          <h1></h1>
-          <ul>
-            CHARACTER
-            <il>{character.race}</il>
-            <br />
-            <il>{character.class}</il>
-            <br />
-            <il>{character.hp}</il>
-            <br />
-            <il>{character.stat}</il>
-            <br />
-            <il>{character.notes}</il>
-          </ul>
-        </Col>
-      </Container>
+      </div>
+      <Col>
+        <h1></h1>
+        <ul>
+          CHARACTER
+          <il>{character.race}</il>
+          <br />
+          <il>{character.class}</il>
+          <br />
+          <il>{character.hp}</il>
+          <br />
+          <il>{character.stat}</il>
+          <br />
+          <il>{character.notes}</il>
+        </ul>
+      </Col>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import backgroundImage from "../../images/DnD-door.jpg";
 
 function Login({ onUserSubmit }) {
   const [user, setUser] = useState({
@@ -31,6 +32,12 @@ function Login({ onUserSubmit }) {
   return (
     <section>
       <h1 data-testid="h1tag">Login</h1>
+      <img
+        src={backgroundImage}
+        className="my-2"
+        style={{ width: "100%" }}
+        alt="cover"
+      />
       <form id="contact-form" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="username">Name:</label>
