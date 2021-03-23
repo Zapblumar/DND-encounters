@@ -1,29 +1,29 @@
-import React, { Component, useState } from "react";
-import axios from "axios";
+import { useQuery, useMutation } from "@apollo/client";
+import { GET_ME } from "../../utils/queries";
+import { Redirect } from "react-router-dom";
+import { ADD_CHARACTER } from "../../utils/mutations";
 
-function Character({ user, onCharSubmit }) {
-  const [character, setCharacter] = useState({
-    username: user.userName,
-    race: "",
-    class: "",
-    hp: "",
-    stat: "",
-    notes: "",
-  });
-  const { username, race, hp, stat, notes } = character;
+function Character() {
+  const { loading, data } = useQuery(GET_ME);
+  const [
+    createCharacter,
+    { called, loading: mutationLoading, error },
+  ] = useMutation(ADD_CHARACTER);
+  if (loading) return <></>;
+  if (!data?.me) return <Redirect to="/" />;
+  if (called && !mutationLoading && !error) return <Redirect to="/chat" />;
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target, user);
+    const formData = new FormData(e.target);
     console.log(formData);
-    const newChar = [...formData.entries()].reduce((obj, [key, value]) => {
-      obj[key] = value;
+    const character = [...formData.entries()].reduce((obj, [key, value]) => {
+      obj[key] = isNaN(value) ? value : +value;
       return obj;
     }, {});
 
-    console.log("here", JSON.stringify(newChar));
-    const res = await axios.post("/user/char", newChar, user);
-    setCharacter({ ...character, [e.target.name]: e.target.value });
-    onCharSubmit(res.data);
+    await createCharacter({
+      variables: { character },
+    });
   };
 
   //JSX
@@ -34,39 +34,51 @@ function Character({ user, onCharSubmit }) {
         <h3>Character Name</h3>
 
         <h3>Race</h3>
-        <select name="Race">
-          <option value="0" selected="selected"></option>
-          <option value="1">elf</option>
-          <option value="2">human</option>
-          <option value="3">dwarf</option>
-          <option value="4">half-elf</option>
-          <option value="5">orc</option>
-          <option value="6">dragonborn</option>
-          <option value="7">gnome</option>
-          <option value="8">tiefling</option>
-          <option value="9">tabaxi</option>
-          <option value="10">changeling</option>
+        <select name="race" defaultValue="">
+          <option value="" disabled></option>
+          {[
+            "elf",
+            "human",
+            "dwarf",
+            "half-elf",
+            "orc",
+            "dragonborn",
+            "gnome",
+            "tiefling",
+            "tabaxi",
+            "changeling",
+          ].map((race) => (
+            <option value={race} key={race}>
+              {race}
+            </option>
+          ))}
         </select>
         <h3>class</h3>
-        <select name="Class">
-          <option value="0" selected="selected"></option>
-          <option value="1">cleric</option>
-          <option value="2">bard</option>
-          <option value="3">wizard</option>
-          <option value="4">druid</option>
-          <option value="5">barbarian</option>
-          <option value="6">monk</option>
-          <option value="7">sorcerer</option>
-          <option value="8">fighter</option>
-          <option value="9">artificer</option>
+        <select name="class" defaultValue="">
+          <option value="" disabled></option>
+          {[
+            "cleric",
+            "bard",
+            "wizard",
+            "druid",
+            "barbarian",
+            "monk",
+            "sorcerer",
+            "fighter",
+            "artificer",
+          ].map((job) => (
+            <option value={job} key={job}>
+              {job}
+            </option>
+          ))}
         </select>
         <h3>HP</h3>
         <input type="text" name="hp" />
         <h3>Stats</h3>
-        <input type="text" name="stats" />
-        <h3>notes</h3>
-        <input type="text" name="notes" />
-        {/* will be array */}
+        <input type="text" name="stat" />
+        {/* <h3>notes</h3> */}
+        {/* <input type="text" name="notes" />
+        will be array */}
         <button type="submit">Create</button>
       </form>
     </div>

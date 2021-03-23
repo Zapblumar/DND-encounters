@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import * as serviceWorker from './components/serviceWorker';
-import reportWebVitals from './components/reportWebVitals';
+import * as serviceWorker from './serviceWorker';
+import reportWebVitals from './reportWebVitals';
 
 
 ReactDOM.render(

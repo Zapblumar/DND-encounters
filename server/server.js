@@ -4,7 +4,7 @@ const http = require("http");
 const { ApolloServer } = require("apollo-server-express");
 const express = require("express");
 const mongoose = require("mongoose");
-const morgan = require("morgan");
+//const morgan = require("morgan");
 const passport = require("passport");
 const session = require("express-session");
 const DB = require("./config/connection");
@@ -26,11 +26,11 @@ const server = new ApolloServer({
   context: authMiddleware
 });
 
-server.applyMiddleware({ app, cors: false });
-const httpServer = http.createServer(server);
+server.applyMiddleware({ app, cors: true });
+const httpServer = http.createServer(app);
 const PORT = process.env.PORT || 3001;
 
-app.use(morgan("tiny"));
+//app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -72,12 +72,12 @@ const getApiAndEmit = (socket) => {
 // io.on("connection", (socket) => {
 //   console.log(socket.handshake.auth); // prints { token: "abcd" }
 // });
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../dnd/build")));
-}
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../dnd/build/index.html"));
-});
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "../dnd/build")));
+// }
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../dnd/build/index.html"));
+// });
 
 DB.once("open", () => {
   httpServer.listen(PORT, (error) => {

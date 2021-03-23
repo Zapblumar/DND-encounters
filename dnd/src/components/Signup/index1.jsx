@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/react-hooks";
-import { ADD_USER } from "../utils/mutations";
+import { useMutation } from "@apollo/client";
+import { ADD_USER } from "../../utils/mutations";
 
-import Auth from "../utils/auth";
+import Auth from "../../utils/auth";
 import backgroundImage from "../../images/signup.jpg";
-const Signup = () => {
+const Signup = (props) => {
   const [user, setUser] = useState({
-    username: "",
+    userName: "",
     email: "",
     password: "",
   });
@@ -38,19 +38,19 @@ const Signup = () => {
   };
 
   return (
-    <main id="signup" className="flex-row justify-center mb-4">
-      <div className="col-12 col-md-6">
+    <main id="signup">
+      <div className="col-12 col-md-6 flex-row justify-center mb-4">
         <div className="card">
           <h4 className="card-header">Sign Up</h4>
           <div className="card-body">
             <form onSubmit={handleFormSubmit}>
               <input
                 className="form-input"
-                placeholder="Your username"
-                name="username"
-                type="username"
-                id="username"
-                value={user.username}
+                placeholder="Your userName"
+                name="userName"
+                type="userName"
+                id="userName"
+                value={user.userName}
                 onChange={handleChange}
               />
               <input

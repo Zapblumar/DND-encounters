@@ -22,7 +22,7 @@ const userSchema = new Schema({
   },
   character: {
     type: Schema.Types.ObjectId,
-    ref: "character"
+    ref: "Character"
   }
 })
 userSchema.pre('save', async function (next) {

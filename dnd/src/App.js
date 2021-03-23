@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { ApolloProvider } from '@apollo/react-hooks';
-import ApolloClient from 'apollo-boost';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import './App.css';
 import Login from './components/Login/index2';
 import LogOut from './components/LogOut'
@@ -9,50 +10,56 @@ import NotFound from './components/notFound';
 import Home from './components/home';
 import Chat from './components/Chat';
 import Character from './components/Characters';
-import useStorage from './components/useStorage';
+import useStorage from './utils/useStorage';
 import Nav from './components/Navbar';
 import Footer from './components/Footer';
+import Auth from './utils/auth';
+
+
+const httpLink = createHttpLink({
+  uri: '/graphql',
+});
+
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = Auth.getToken()
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    }
+  }
+});
 
 const client = new ApolloClient({
-  request: operation => {
-    const token = localStorage.getItem('id_token');
-
-    operation.setContext({
-      headers: {
-        authorization: token ? `Bearer ${token}` : ''
-      }
-    });
-  },
-  uri: '/graphql'
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
 });
-const PAGE = {
-  Home, Signup, Login, Chat, LogOut
 
-};
 
 function App() {
-  const [character, setCharacter] = useStorage("character");
-  const [user, setUser] = useStorage("user");
-  const [currentPage, handlePageChange] = useState("Home");
-  const Page = PAGE[currentPage];
-  const onCharSubmit = () => { }
 
 
   return (
     <ApolloProvider client={client}>
-      <div className="flex-column justify-flex-start min-100-vh">
-        <Nav currentPage={currentPage} handlePageChange={handlePageChange}></Nav>
+      <Router>
+        <div className="flex-column justify-flex-start min-100-vh">
+          <Nav />
+          <div className="container">
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+              <Route exact path="/character/:user?" component={Character} />
+              <Route exact path="/chat/:id?" component={Chat} />
 
-        <main>
-
-          {character ? <Chat character={character} /> : user ? <Character user={user} onCharSubmit={setCharacter} /> : <Page onUserSubmit={setUser} />}
-
-
-
-
-        </main>
-        <Footer />
-      </div>
+              <Route component={NotFound} />
+            </Switch>
+          </div>
+          <Footer />
+        </div>
+      </Router>
 
     </ApolloProvider>
   );

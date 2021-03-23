@@ -1,18 +1,22 @@
 import React, { useState, useEffect, useMemo, useLocalStorage } from "react";
+import { useQuery, useMutation } from "@apollo/client";
+import { GET_ME } from "../../utils/queries";
 import socketIOClient from "socket.io-client";
-
 import { Button, Form, Col, Container, Tab, Row } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.css";
+import { Redirect } from "react-router-dom";
 const ENDPOINT = "http://localhost:3000";
 
-function Chat({ character }) {
+function Chat() {
+  const { loading, data } = useQuery(GET_ME);
   const [yourID, setYourID] = useState();
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
-
-  const socket = useMemo(() => socketIOClient.connect("/"), []);
+  const socket = useMemo(() => {
+    if (!loading && data?.me) return socketIOClient.connect("/");
+  }, [loading, data]);
 
   useEffect(() => {
+    if (!socket) return;
     socket.on("your id", (id) => {
       setYourID(id);
     });
@@ -21,7 +25,7 @@ function Chat({ character }) {
       console.log("here");
       receivedMessage(message);
     });
-  }, []);
+  }, [socket]);
 
   function receivedMessage(message) {
     setMessages((oldMsgs) => [...oldMsgs, message]);
@@ -41,9 +45,11 @@ function Chat({ character }) {
   function handleChange(e) {
     setMessage(e.target.value);
   }
-
+  if (loading) return <> </>;
+  if (!data?.me) return <Redirect to="/" />;
+  const { character } = data.me;
   return (
-    <div className="chat">
+    <Row className="chat">
       <div className="col-12 col-md-6">
         <Tab.Content className=" justify-content-center overflow-auto flex-grow-1">
           {messages.map((message, index) => {
@@ -82,11 +88,9 @@ function Chat({ character }) {
           <il>{character.hp}</il>
           <br />
           <il>{character.stat}</il>
-          <br />
-          <il>{character.notes}</il>
         </ul>
       </Col>
-    </div>
+    </Row>
   );
 }
 

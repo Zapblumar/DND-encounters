@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/react-hooks";
-import { LOGIN_USER } from "../utils/mutations";
-import Auth from "../utils/auth";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../../utils/mutations";
+import Auth from "../../utils/auth";
 import backgroundImage from "../../images/DnD-door.jpg";
 
 const Login = (props) => {
   const [user, setUser] = useState({
-    username: "",
+    userName: "",
     email: "",
     password: "",
   });
@@ -45,15 +45,15 @@ const Login = (props) => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-md-6">
-        <div className="card">
+    <div id="login">
+      <div className="col-12 col-md-6 justify-content-center overflow-auto flex-grow-1">
+        <div className="card display: table-caption">
           <h4 className="card-header">Login</h4>
           <div className="card-body">
             <form onSubmit={handleFormSubmit}>
               <input
                 className="form-input"
-                placeholder="Your userName"
+                placeholder="Your username"
                 name="userName"
                 type="userName"
                 id="userName"
@@ -76,9 +76,9 @@ const Login = (props) => {
                 type="password"
                 id="password"
                 value={user.password}
-                onBlur={handleChange}
+                onChange={handleChange}
               />
-              <button className="button" type="submit">
+              <button className="btn" type="submit">
                 Submit
               </button>
             </form>
@@ -87,7 +87,7 @@ const Login = (props) => {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 

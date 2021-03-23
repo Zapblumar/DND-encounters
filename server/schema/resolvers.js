@@ -7,7 +7,7 @@ const resolvers = {
     me: async (parents, args, context) => {
       console.log(parents, args)
       if (context.user) {
-        const userData = await Users.findOne({ _id: context.user._id })
+        const userData = await User.findOne({ _id: context.user._id })
           .select('-__v -password')
           .populate("character")
         return userData;
@@ -15,8 +15,8 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-    user: async (username) => {
-      return User.findOne({ username })
+    user: async (userName) => {
+      return User.findOne({ userName })
         .select('-__v -password')
         .populate("character")
     },
@@ -34,7 +34,8 @@ const resolvers = {
       return { token, user };
     },
     login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
+
+      const user = await User.findOne({ userEmail: email });
 
       if (!user) {
         throw new AuthenticationError('Incorrect credentials');
@@ -51,15 +52,14 @@ const resolvers = {
     },
     createCharacter: async (parent, { character }, context) => {
       if (context.user) {
-        const newCharacter = await Character.create({ ...character, username: context.user.username });
+        const newCharacter = await Character.create({ ...character, user: context.user._id });
 
-        await User.findByIdAndUpdate(
+        return User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: { character: character._id } },
+          { character: newCharacter },
           { new: true }
-        );
+        ).populate('character')
 
-        return newCharacter;
       }
 
       throw new AuthenticationError('You need to be logged in!');
