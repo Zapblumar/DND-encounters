@@ -50,7 +50,7 @@ function Chat() {
   const { character } = data.me;
   return (
     <Row className="chat">
-      <div className="col-12 col-md-6">
+      <div id="chat" className="col-12 col-md-6">
         <Tab.Content className=" justify-content-center overflow-auto flex-grow-1">
           {messages.map((message, index) => {
             if (message.id === yourID) {
@@ -64,7 +64,7 @@ function Chat() {
           onSubmit={sendMessage}
         >
           <a>
-            {character.race}
+            {character.userName}
 
             <input
               value={message}
@@ -78,17 +78,19 @@ function Chat() {
         </Form>
       </div>
       <Col>
-        <h1></h1>
-        <ul>
-          CHARACTER
-          <il>{character.race}</il>
-          <br />
-          <il>{character.class}</il>
-          <br />
-          <il>{character.hp}</il>
-          <br />
-          <il>{character.stat}</il>
-        </ul>
+        <div className="characterSheet">
+          <ul className=" justify-content-center overflow-auto flex-grow-1">
+            <h3> CHARACTER</h3>
+            <br />
+            <il>{character.race}</il>
+            <br />
+            <il>{character.class}</il>
+            <br />
+            <il>{character.hp}</il>
+            <br />
+            <il>{character.stat}</il>
+          </ul>
+        </div>
       </Col>
     </Row>
   );

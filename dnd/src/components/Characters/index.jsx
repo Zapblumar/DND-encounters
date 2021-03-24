@@ -28,7 +28,7 @@ function Character() {
 
   //JSX
   return (
-    <div className="align-items-center d-flex">
+    <div id="character" className="align-items-center d-flex">
       <h1 className="boarder-right">Create Charactor</h1>
       <form onSubmit={handleSubmit}>
         <h3>Character Name</h3>

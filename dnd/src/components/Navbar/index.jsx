@@ -19,7 +19,9 @@ function Nav() {
         <nav className="text-center">
           {Auth.loggedIn() ? (
             <>
-              <Link to="/Character">Character</Link>
+              <Link to="/Character" className="mr-5">
+                Character
+              </Link>
               <a href="/" onClick={logout}>
                 Logout
               </a>
