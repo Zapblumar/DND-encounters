@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { Component, useState } from "react";
+import backgroundImage from "../../images/signup.jpg";
 
 const Signup = ({ onUserSubmit }) => {
   const handleSubmit = async (e) => {
@@ -18,8 +19,14 @@ const Signup = ({ onUserSubmit }) => {
 
   //JSX
   return (
-    <div>
+    <div id="signup">
       <h1>Sign Up</h1>
+      <img
+        src={backgroundImage}
+        className="my-2"
+        style={{ width: "100%" }}
+        alt="cover"
+      />
       <form onSubmit={handleSubmit}>
         <h3>User Name</h3>
         <input type="text" name="userName" />

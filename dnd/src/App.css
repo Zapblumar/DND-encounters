@@ -1,7 +1,7 @@
 /*Header*/
 .header {
   padding: 20px;
-  background-color: #080808;
+  background-color: #97da94;
   color: #35cf16;
   flex-wrap: wrap;
   position: sticky;
@@ -42,12 +42,53 @@
 .header {
   background-color: aqua;
 }
+h1 {
+  text-align: center;
+}
+#home {
+  height: auto;
+  width: auto;
+  background-image: url("./images/DND_stayHome.png");
+  background-size: cover;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+#character {
+  height: 100%;
+  width: 100%;
+  background-image: url(./images/images.jpg);
+  background-size: cover;
+}
+.characterSheet {
+  height: 100%;
+  width: 100%;
+  background-image: url(./images/character.jpeg);
+  background-size: cover;
+}
+p {
+  color: yellow;
+}
+#chat {
+  height: 100%;
+  width: 100%;
+  background-image: url(./images/dungeons-dragons.jpg);
+  background-size: cover;
+}
+#signup {
+  height: 100%;
+  width: 100%;
+  background-image: url(./images/signup.jpg);
+  background-size: cover;
+}
+#login {
+  height: 100%;
+  width: 100%;
+  background-image: url(./images/DnD-door.jpg);
+  background-size: cover;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -75,7 +116,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: #ffffff;
+
   border-radius: 8px;
 }
 
