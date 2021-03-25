@@ -18,11 +18,12 @@ function Chat() {
   useEffect(() => {
     if (!socket) return;
     socket.on("your id", (id) => {
+      console.log("here", id);
       setYourID(id);
     });
 
     socket.on("message", (message) => {
-      console.log("here");
+      console.log("socket", message);
       receivedMessage(message);
     });
   }, [socket]);
@@ -35,10 +36,10 @@ function Chat() {
     e.preventDefault();
     const messageObject = {
       body: message,
-      id: yourID,
+      id: data.me.userName,
     };
     setMessage("");
-    console.log(socket);
+    console.log(messageObject);
     socket.emit("message", messageObject);
   }
 
@@ -54,17 +55,25 @@ function Chat() {
         <Tab.Content className=" justify-content-center overflow-auto flex-grow-1">
           {messages.map((message, index) => {
             if (message.id === yourID) {
-              return <p key={index}>{message.body}</p>;
+              return (
+                <p key={index}>
+                  [{message.id}] {message.body}
+                </p>
+              );
             }
-            return <p key={index}>{message.body}</p>;
+            return (
+              <p key={index}>
+                [{message.id}] {message.body}
+              </p>
+            );
           })}
         </Tab.Content>
         <Form
           className=" border-top border-right border-bottom border-left "
           onSubmit={sendMessage}
         >
-          <a>
-            {character.userName}
+          <a value={data.me.userName}>
+            {data.me.userName}
 
             <input
               value={message}
@@ -82,13 +91,15 @@ function Chat() {
           <ul className=" justify-content-center overflow-auto flex-grow-1">
             <h3> CHARACTER</h3>
             <br />
-            <il>{character.race}</il>
+            <li>{data.me.userName}</li>
             <br />
-            <il>{character.class}</il>
+            <li>{character.race}</li>
             <br />
-            <il>{character.hp}</il>
+            <li>{character.class}</li>
             <br />
-            <il>{character.stat}</il>
+            <li>{character.hp}</li>
+            <br />
+            <li>{character.stat}</li>
           </ul>
         </div>
       </Col>

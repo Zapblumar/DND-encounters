@@ -10,7 +10,7 @@ import NotFound from './components/notFound';
 import Home from './components/home';
 import Chat from './components/Chat';
 import Character from './components/Characters';
-import useStorage from './utils/useStorage';
+import Payment from "./components/Payment";
 import Nav from './components/Navbar';
 import Footer from './components/Footer';
 import Auth from './utils/auth';
@@ -57,7 +57,7 @@ function App() {
               <Route component={NotFound} />
             </Switch>
           </div>
-          <Footer />
+          <Footer><Route exact path="/Payment" component={Payment} /></Footer>
         </div>
       </Router>
 
