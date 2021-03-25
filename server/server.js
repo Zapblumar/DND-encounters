@@ -58,7 +58,7 @@ io.on("connection", (socket) => {
   socket.on("message", ({ body, id }) => {
     console.log(body);
     //check factor
-    io.emit("message", { body });
+    io.emit("message", { body, id });
   });
   socket.on("disconnect", () => {
     console.log("Client disconnected");
