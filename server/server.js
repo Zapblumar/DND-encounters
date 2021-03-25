@@ -30,10 +30,9 @@ server.applyMiddleware({ app, cors: true });
 const httpServer = http.createServer(app);
 const PORT = process.env.PORT || 3001;
 
-//app.use(morgan("tiny"));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
 
 
 // app.use(passport.initialize());
