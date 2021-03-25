@@ -30,10 +30,9 @@ server.applyMiddleware({ app, cors: true });
 const httpServer = http.createServer(app);
 const PORT = process.env.PORT || 3001;
 
-//app.use(morgan("tiny"));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
 
 
 // app.use(passport.initialize());
@@ -58,7 +57,7 @@ io.on("connection", (socket) => {
   socket.on("message", ({ body, id }) => {
     console.log(body);
     //check factor
-    io.emit("message", { body });
+    io.emit("message", { body, id });
   });
   socket.on("disconnect", () => {
     console.log("Client disconnected");
