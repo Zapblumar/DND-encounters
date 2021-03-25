@@ -43,6 +43,7 @@
   background-color: aqua;
 }
 h1 {
+  color: beige;
   text-align: center;
 }
 #home {
@@ -50,6 +51,11 @@ h1 {
   width: auto;
   background-image: url("./images/DND_stayHome.png");
   background-size: cover;
+}
+.homepage {
+  color: red;
+  text-align: center;
+  font-size: x-large;
 }
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

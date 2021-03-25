@@ -1,8 +1,12 @@
 import React from "react";
-import Payment from "../Payment";
+import { Link } from "react-router-dom";
 
 function Footer() {
-  return <button onClick={() => <Payment />}>Donate</button>;
+  return (
+    <Link to="/Payment" className="ml-10">
+      Donate
+    </Link>
+  );
 }
 
 export default Footer;

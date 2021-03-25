@@ -5,9 +5,11 @@ function Home() {
   return (
     <div id="home">
       <h1>Home Page</h1>
-      <p>
-        welcome to paperless DND encounters. be able to chat with your team and
-        keep track of your character. please sign up now.
+      <p className="homepage">
+        Welcome to paperless DND encounters.
+        <br /> Where are able to chat with your team and keep track of your
+        character.
+        <br /> Please sign up or login now.
       </p>
     </div>
   );

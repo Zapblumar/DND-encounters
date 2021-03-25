@@ -11,6 +11,8 @@ function Character() {
   ] = useMutation(ADD_CHARACTER);
   if (loading) return <></>;
   if (!data?.me) return <Redirect to="/" />;
+  const { character } = data.me;
+
   if (called && !mutationLoading && !error) return <Redirect to="/chat" />;
   const handleSubmit = async (e) => {
     e.preventDefault();

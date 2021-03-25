@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../../utils/mutations";
 
 import Auth from "../../utils/auth";
-import backgroundImage from "../../images/signup.jpg";
+
 const Signup = (props) => {
   const [user, setUser] = useState({
     userName: "",
