@@ -8,11 +8,10 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const session = require("express-session");
 const DB = require("./config/connection");
-const { typeDefs, resolvers } = require('./schema');
-const { authMiddleware } = require('./utils/auth');
+const { typeDefs, resolvers } = require("./schema");
+const { authMiddleware } = require("./utils/auth");
 const userRouter = require("./routes/user");
 //const chatRoute = require("./routes/chat");
-
 
 // Use this to log mongo queries being executed!
 mongoose.set("debug", true);
@@ -23,7 +22,7 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: authMiddleware
+  context: authMiddleware,
 });
 
 server.applyMiddleware({ app, cors: true });
@@ -34,16 +33,10 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-
-
 // app.use(passport.initialize());
 // app.use(passport.session());
 //app.use("/chat", chatRoute);
 //app.use("/user", userRouter);
-
-
-
-
 
 const io = require("socket.io")(httpServer, {
   cors: {
@@ -78,6 +71,13 @@ const getApiAndEmit = (socket) => {
 // app.get("*", (req, res) => {
 //   res.sendFile(path.join(__dirname, "../dnd/build/index.html"));
 // });
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.resolve(__dirname, "../client/build")));
+}
+app.get("*", (req, res) =>
+  res.sendFile(path.resolve(__dirname, "../client/build/index.html"))
+);
 
 DB.once("open", () => {
   httpServer.listen(PORT, (error) => {
